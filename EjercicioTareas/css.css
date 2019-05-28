@@ -1,0 +1,32 @@
+#divContenedor{
+    margin: 3% 3% 0 3%;
+}
+#divEditar{
+    width: 45%;
+    float: left;
+    border-radius: 20px;
+    border: 2px solid #305249;
+}
+.divBorder{
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+#divListaTareas{
+float: right;
+width: 53%
+}
+
+.inputAutor { width: 50%; }
+.inputDescripcion { width: 80%; }
+.inputFecha { width: 180px; }
+
+.divFecha { display: -webkit-box; }
+.divChkBotones { margin-left: 50px; }
+.chkRealizadoEditar { margin-top: 0.77%; }
+.buttonGuardar { margin-left: 60px; }
+
+.btnAdd{
+    vertical-align: top;
+    float: right;
+}
