@@ -20,7 +20,11 @@
     margin-left: 40px;
     margin-top: 10px;
 }
-
+.divBtn{
+    margin-bottom: 2%;
+    margin-right: 10%;
+    float: right;
+}
 /* Estilos de los inputs */
 .inputAutor { width: 50%; }
 .inputDescripcion { width: 80%; }
