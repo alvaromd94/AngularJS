@@ -41,7 +41,7 @@
     vertical-align: middle;
 }
 
-/* Trucos de veterano */
+
 tbody > tr > td:last-child > a {
     visibility: hidden;
 }

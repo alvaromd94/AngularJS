@@ -9,7 +9,7 @@ app.controller('myCtrl', function ($scope, $filter) {
     },
     {
         "autor": "Lucía",
-        "desc": "Sacar a los perros a pasear",
+        "desc": "Sacar los perros a pasear",
         "fecha": "26/05/2019",
         "check": true
     }];
@@ -19,7 +19,7 @@ app.controller('myCtrl', function ($scope, $filter) {
     // inhabilitada
     $scope.modo;
     $scope.noEditable = true
-    const labelNoAny = "Fecha de la tarea"
+    $scope.botonOff = false
 
     $scope.Add = function () {
         $scope.noEditable = false
@@ -40,10 +40,12 @@ app.controller('myCtrl', function ($scope, $filter) {
         $scope.valueCheck = ""
         $("label:eq(2)").text("Fecha de la tarea")
         $("td a").show()
+        $scope.botonOff = false
     }
     $scope.Editar = function (index) {
         $scope.noEditable = false
         $scope.modo = "editar";
+        $scope.botonOff = true
 
         // Guardamos la fila a la que hacemos referencia
         // al editar
@@ -101,6 +103,7 @@ app.controller('myCtrl', function ($scope, $filter) {
         $scope.valueCheck = ""
         $("td a").show()
         $("label:eq(2)").text("Fecha de la tarea")
+        $scope.botonOff = false
 
         /* angular.forEach($scope.listaTareas, function (key, index) {
             console.log(key.autor)
