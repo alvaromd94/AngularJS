@@ -1,19 +1,14 @@
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function ($scope, $filter) {
+var app = angular.module('myApp', ['ngStorage']);
+app.controller('myCtrl', function ($scope, $filter, $localStorage) {
 
-    $scope.listaTareas = [{
-        "autor": "John",
-        "desc": "Limpieza del cuarto de baño",
-        "fecha": "28/05/2019",
-        "check": false
-    },
-    {
-        "autor": "Lucía",
-        "desc": "Sacar los perros a pasear",
-        "fecha": "26/05/2019",
-        "check": true
-    }];
+    $scope.listaTareas = [];
+    if ($localStorage.listaTareas) {
+        $scope.listaTareas=$localStorage.listaTareas;               
+    } else {
+        $localStorage.listaTareas = [];
+    }
 
+    
 
     // Por defecto, la vista de edicion
     // inhabilitada
@@ -27,6 +22,9 @@ app.controller('myCtrl', function ($scope, $filter) {
     }
 
     $scope.Delete = function (index) {
+
+        $localStorage.listaTareas.splice(index, 1)
+
         $scope.listaTareas.splice(index, 1)
     }
 
@@ -42,7 +40,7 @@ app.controller('myCtrl', function ($scope, $filter) {
         $("td a").show()
         $scope.botonOff = false
     }
-    $scope.Editar = function (index) {
+    $scope.editar = function (index) {
         $scope.noEditable = false
         $scope.modo = "editar";
         $scope.botonOff = true
@@ -62,35 +60,54 @@ app.controller('myCtrl', function ($scope, $filter) {
         $("td a").hide()
     }
     $scope.Save = function () {
+        
         if ($scope.modo == "crear") {
+
             $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
-            $scope.listaTareas.push({
+            !$scope.valueCheck ? $scope.valueCheck = false : $scope.valueCheck = true
+
+            $localStorage.listaTareas.push({
                 "autor": $scope.valueAutor,
                 "desc": $scope.valueDesc,
                 "fecha": $scope.valueFechaGG,
                 "check": $scope.valueCheck
             })
+
+            var varUltRegistro = ($localStorage.listaTareas.length - 1)
+
+            $scope.listaTareas.push({
+                "autor": $localStorage.listaTareas[varUltRegistro].autor,
+                "desc": $localStorage.listaTareas[varUltRegistro].desc,
+                "fecha": $localStorage.listaTareas[varUltRegistro].fecha,
+                "check": $localStorage.listaTareas[varUltRegistro].check
+            })
+
             $("label:eq(2)").text("Fecha de la tarea")
 
         } else {
 
-            // What else?
             var i = $scope.indiceEditar
             $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
 
-            $scope.listaTareas[i].autor = $scope.valueAutor
-            $scope.listaTareas[i].desc = $scope.valueDesc
+            $localStorage.listaTareas[i].autor = $scope.valueAutor
+            $localStorage.listaTareas[i].desc = $scope.valueDesc
             if ($scope.valueFecha == undefined
                 || $scope.valueFechaGG == undefined
                 || $scope.valueFechaGG == ""
                 || $scope.valueFechaGG == null) {
-                // Any What else?
+
             } else {
-                $scope.listaTareas[i].fecha = $scope.valueFechaGG
+                $localStorage.listaTareas[i].fecha = $scope.valueFechaGG
             }
-            $scope.listaTareas[i].check = $scope.valueCheck
+            $localStorage.listaTareas[i].check = $scope.valueCheck
 
             $scope.valueFechaGG = undefined
+
+            $scope.listaTareas[i].autor = $localStorage.listaTareas[i].autor
+            $scope.listaTareas[i].desc = $localStorage.listaTareas[i].autor
+            $scope.listaTareas[i].fecha = $localStorage.listaTareas[i].fecha
+            $scope.listaTareas[i].check = $localStorage.listaTareas[i].check
+
             $("label:eq(2)").text("Fecha de la tarea")
 
         }
@@ -104,6 +121,8 @@ app.controller('myCtrl', function ($scope, $filter) {
         $("td a").show()
         $("label:eq(2)").text("Fecha de la tarea")
         $scope.botonOff = false
+
+
 
         /* angular.forEach($scope.listaTareas, function (key, index) {
             console.log(key.autor)

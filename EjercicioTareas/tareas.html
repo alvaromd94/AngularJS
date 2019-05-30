@@ -18,14 +18,15 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
     <link rel="stylesheet" href="./css.css">
 </head>
 
 <body ng-app="myApp" ng-controller="myCtrl">
 
-    <div id="divContenedor">
-        <div id="divEditar">
-            <div class="divContenidoEditar">
+    <div  id="divContenedor">
+        <div class="col-lg-5" id="divEditar">
+            <div  class="divContenidoEditar">
                 <form>
                     <!-- Autor -->
                     <div class="form-group">
@@ -60,7 +61,7 @@
                 </form>
             </div>
         </div>
-        <div id="divListaTareas">
+        <div class="col-lg-6" id="divListaTareas">
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
@@ -73,12 +74,12 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="tarea in listaTareas">
-                        <td>{{ tarea.autor }}</td>
-                        <td>{{ tarea.desc }}</td>
-                        <td>{{ tarea.fecha }}</td>
-                        <td ng-if="tarea.check">Realizada</td>
-                        <td ng-if="!tarea.check">Incompleta</td>
-                        <td>
+                        <td ng-if="tarea.autor!=undefined">{{ tarea.autor }}</td>
+                        <td ng-if="tarea.desc!=undefined">{{ tarea.desc }}</td>
+                        <td ng-if="tarea.fecha!=undefined">{{ tarea.fecha }}</td>
+                        <td ng-if="tarea.check!=undefined && tarea.check==true">Realizada</td>
+                        <td ng-if="tarea.check!=undefined && tarea.check==false">Incompleta</td>
+                        <td ng-if="tarea.check!=undefined">
                             <a ng-click="Editar($index)" href="" title="Editar tarea"><img src="imagenes/edit.png"
                                     width="30" /></a>
                             <a ng-click="Delete($index)" href="" title="Borrar tarea"><img src="imagenes/delete.png"
