@@ -1,29 +1,31 @@
 var app = angular.module('myApp', ['ngStorage']);
 app.controller('myCtrl', function ($scope, $filter, $localStorage) {
 
+    //Si no existe el localStorage, lo creamos
+    //y lo vinculamos al scope.listaTareas
     $scope.listaTareas = [];
-    if ($localStorage.listaTareas) {
-        $scope.listaTareas=$localStorage.listaTareas;               
-    } else {
-        $localStorage.listaTareas = [];
-    }  
+    if (!$localStorage.listaTareas) {
+           $localStorage.listaTareas = [];          
+    } 
+      $scope.listaTareas=$localStorage.listaTareas;    
+
     // Por defecto, la vista de edicion
     // inhabilitada
     $scope.modo;
     $scope.noEditable = true
     $scope.botonOff = false
 
-    $scope.Add = function () {
+    $scope.add = function () {
         $scope.noEditable = false
         $scope.modo = "crear";
     }
-    $scope.Delete = function (index) {
+    $scope.delete = function (index) {
         //Llamamos al localStorage y con el splice eliminamos la tarea correspondiente
         $localStorage.listaTareas.splice(index, 1)
 
        // $scope.listaTareas.splice(index, 1)
     }
-    $scope.Cancelar = function () {
+    $scope.cancelar = function () {
         // Volvemos a deshabilitarlo
         $scope.noEditable = true
         // Borramos los campos
@@ -54,7 +56,7 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
 
         $("td a").hide()
     }
-    $scope.Save = function () {
+    $scope.save = function () {
         
         if ($scope.modo == "crear") {
 
@@ -71,7 +73,7 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
 
             //Creamos una variable que va a guardar los valores del último registro
             // insertado del localStorage a la lista
-            var varUltRegistro = ($localStorage.listaTareas.length - 1)
+            //var varUltRegistro = ($localStorage.listaTareas.length - 1)
 
             /* $scope.listaTareas.push({
                 "autor": $localStorage.listaTareas[varUltRegistro].autor,
@@ -99,10 +101,10 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
 
             $scope.valueFechaGG = undefined
 
-            $scope.listaTareas[i].autor = $localStorage.listaTareas[i].autor
+            /* $scope.listaTareas[i].autor = $localStorage.listaTareas[i].autor
             $scope.listaTareas[i].desc = $localStorage.listaTareas[i].desc
             $scope.listaTareas[i].fecha = $localStorage.listaTareas[i].fecha
-            $scope.listaTareas[i].check = $localStorage.listaTareas[i].check
+            $scope.listaTareas[i].check = $localStorage.listaTareas[i].check */
 
             $("label:eq(2)").text("Fecha de la tarea")
         }

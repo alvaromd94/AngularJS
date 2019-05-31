@@ -53,9 +53,9 @@
                         </div>
                     </div>
                     <div class="divBtn">
-                    <button ng-click="Save()" type="button" ng-disabled="noEditable"
+                    <button ng-click="save()" type="button" ng-disabled="noEditable"
                         class="buttonGuardar btn btn-success">Guardar</button>
-                    <button ng-click="Cancelar()" type="button" ng-disabled="noEditable"
+                    <button ng-click="cancelar()" type="button" ng-disabled="noEditable"
                         class="btn btn-outline-secondary">Cancelar</button>
                     </div>
                 </form>
@@ -82,13 +82,13 @@
                         <td ng-if="tarea.check!=undefined">
                             <a ng-click="editar($index)" href="" title="Editar tarea"><img src="imagenes/edit.png"
                                     width="30" /></a>
-                            <a ng-click="Delete($index)" href="" title="Borrar tarea"><img src="imagenes/delete.png"
+                            <a ng-click="delete($index)" href="" title="Borrar tarea"><img src="imagenes/delete.png"
                                     width="30" /></a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button ng-disabled="botonOff" ng-click="Add()" type="button" class="buttonAdd btn btn-info">Añadir</button>
+            <button ng-disabled="botonOff" ng-click="add()" type="button" class="buttonAdd btn btn-info">Añadir</button>
         </div>
     </div>
 
