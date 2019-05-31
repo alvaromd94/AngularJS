@@ -6,10 +6,7 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
         $scope.listaTareas=$localStorage.listaTareas;               
     } else {
         $localStorage.listaTareas = [];
-    }
-
-    
-
+    }  
     // Por defecto, la vista de edicion
     // inhabilitada
     $scope.modo;
@@ -20,14 +17,12 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
         $scope.noEditable = false
         $scope.modo = "crear";
     }
-
     $scope.Delete = function (index) {
-
+        //Llamamos al localStorage y con el splice eliminamos la tarea correspondiente
         $localStorage.listaTareas.splice(index, 1)
 
-        $scope.listaTareas.splice(index, 1)
+       // $scope.listaTareas.splice(index, 1)
     }
-
     $scope.Cancelar = function () {
         // Volvemos a deshabilitarlo
         $scope.noEditable = true
@@ -66,6 +61,7 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
             $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
             !$scope.valueCheck ? $scope.valueCheck = false : $scope.valueCheck = true
 
+            //Primero guardamos los valores en localStorage
             $localStorage.listaTareas.push({
                 "autor": $scope.valueAutor,
                 "desc": $scope.valueDesc,
@@ -73,17 +69,17 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
                 "check": $scope.valueCheck
             })
 
+            //Creamos una variable que va a guardar los valores del último registro
+            // insertado del localStorage a la lista
             var varUltRegistro = ($localStorage.listaTareas.length - 1)
 
-            $scope.listaTareas.push({
+            /* $scope.listaTareas.push({
                 "autor": $localStorage.listaTareas[varUltRegistro].autor,
                 "desc": $localStorage.listaTareas[varUltRegistro].desc,
                 "fecha": $localStorage.listaTareas[varUltRegistro].fecha,
                 "check": $localStorage.listaTareas[varUltRegistro].check
-            })
-
+            }) */
             $("label:eq(2)").text("Fecha de la tarea")
-
         } else {
 
             var i = $scope.indiceEditar
@@ -104,14 +100,12 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
             $scope.valueFechaGG = undefined
 
             $scope.listaTareas[i].autor = $localStorage.listaTareas[i].autor
-            $scope.listaTareas[i].desc = $localStorage.listaTareas[i].autor
+            $scope.listaTareas[i].desc = $localStorage.listaTareas[i].desc
             $scope.listaTareas[i].fecha = $localStorage.listaTareas[i].fecha
             $scope.listaTareas[i].check = $localStorage.listaTareas[i].check
 
             $("label:eq(2)").text("Fecha de la tarea")
-
         }
-
         // Volvemos a deshabilitarlo
         $scope.noEditable = true
         $scope.valueAutor = ""
@@ -122,22 +116,5 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
         $("label:eq(2)").text("Fecha de la tarea")
         $scope.botonOff = false
 
-
-
-        /* angular.forEach($scope.listaTareas, function (key, index) {
-            console.log(key.autor)
-            console.log(key.check)
-            console.log(index)
-            if (key.check == true) {
-                $("tbody tr:eq(" + index + ")").css("background", "green")
-                console.log(index)
-            } else {
-                $("tbody tr:eq(" + index + ")").css("background", "yellow")
-            }
-        }) */
     }
-
-
-
-
 });
