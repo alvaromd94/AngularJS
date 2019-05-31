@@ -67,8 +67,8 @@
                     <tr>
                         <th scope="col">Autor</th>
                         <th scope="col">Descripción</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
+                        <th id="thFecha" scope="col">Fecha</th>
+                        <th id="thEstado" scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -76,9 +76,9 @@
                     <tr ng-repeat="tarea in listaTareas">
                         <td ng-if="tarea.autor!=undefined">{{ tarea.autor }}</td>
                         <td ng-if="tarea.desc!=undefined">{{ tarea.desc }}</td>
-                        <td ng-if="tarea.fecha!=undefined">{{ tarea.fecha }}</td>
-                        <td ng-if="tarea.check!=undefined && tarea.check==true">Realizada</td>
-                        <td ng-if="tarea.check!=undefined && tarea.check==false">Incompleta</td>
+                        <td id="thFecha" ng-if="tarea.fecha!=undefined">{{ tarea.fecha }}</td>
+                        <td id="thEstado" ng-if="tarea.check!=undefined && tarea.check==true">Realizada</td>
+                        <td id="thEstado" ng-if="tarea.check!=undefined && tarea.check==false">Incompleta</td>
                         <td ng-if="tarea.check!=undefined">
                             <a ng-click="editar($index)" href="" title="Editar tarea"><img src="imagenes/edit.png"
                                     width="30" /></a>

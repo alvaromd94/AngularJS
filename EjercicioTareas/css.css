@@ -1,8 +1,16 @@
+html{
+    background: beige
+    /* background: url('../img/back2v2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: no-repeat; */
+    } 
+
 /* Estilos de los divs Padres */
 #divContenedor{
      margin: 3% 3% 0 3%;  
 }
 #divEditar{
+    background-color: aliceblue;
    /*  width: 45%;*/
     float: left; 
     border-radius: 20px;
@@ -10,6 +18,7 @@
     margin-block-end: 5%;
 }
 #divListaTareas{
+    background-color: bisque;
     float: right;
    /*  width: 53%; */
     border-radius: 0px 0px 20px 20px;
@@ -58,4 +67,13 @@ tbody > tr:hover > td:last-child > a {
 .col-lg-6{
     padding-left:0px;
     padding-right: 0px;
+}
+
+@media only screen and (max-width:560px){
+    #thFecha{
+        display:none
+    }
+    #thEstado{
+        display:none
+    }
 }

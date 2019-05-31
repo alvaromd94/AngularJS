@@ -5,9 +5,9 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
     //y lo vinculamos al scope.listaTareas
     $scope.listaTareas = [];
     if (!$localStorage.listaTareas) {
-           $localStorage.listaTareas = [];          
-    } 
-      $scope.listaTareas=$localStorage.listaTareas;    
+        $localStorage.listaTareas = [];
+    }
+    $scope.listaTareas = $localStorage.listaTareas;
 
     // Por defecto, la vista de edicion
     // inhabilitada
@@ -23,7 +23,7 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
         //Llamamos al localStorage y con el splice eliminamos la tarea correspondiente
         $localStorage.listaTareas.splice(index, 1)
 
-       // $scope.listaTareas.splice(index, 1)
+        // $scope.listaTareas.splice(index, 1)
     }
     $scope.cancelar = function () {
         // Volvemos a deshabilitarlo
@@ -57,66 +57,87 @@ app.controller('myCtrl', function ($scope, $filter, $localStorage) {
         $("td a").hide()
     }
     $scope.save = function () {
-        
+        var error = false
         if ($scope.modo == "crear") {
 
-            $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
-            !$scope.valueCheck ? $scope.valueCheck = false : $scope.valueCheck = true
-
-            //Primero guardamos los valores en localStorage
-            $localStorage.listaTareas.push({
-                "autor": $scope.valueAutor,
-                "desc": $scope.valueDesc,
-                "fecha": $scope.valueFechaGG,
-                "check": $scope.valueCheck
-            })
-
-            //Creamos una variable que va a guardar los valores del último registro
-            // insertado del localStorage a la lista
-            //var varUltRegistro = ($localStorage.listaTareas.length - 1)
-
-            /* $scope.listaTareas.push({
-                "autor": $localStorage.listaTareas[varUltRegistro].autor,
-                "desc": $localStorage.listaTareas[varUltRegistro].desc,
-                "fecha": $localStorage.listaTareas[varUltRegistro].fecha,
-                "check": $localStorage.listaTareas[varUltRegistro].check
-            }) */
-            $("label:eq(2)").text("Fecha de la tarea")
-        } else {
-
-            var i = $scope.indiceEditar
-            $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
-
-            $localStorage.listaTareas[i].autor = $scope.valueAutor
-            $localStorage.listaTareas[i].desc = $scope.valueDesc
-            if ($scope.valueFecha == undefined
-                || $scope.valueFechaGG == undefined
-                || $scope.valueFechaGG == ""
-                || $scope.valueFechaGG == null) {
+            if ($scope.valueAutor == "" || $scope.valueAutor == undefined
+                || $scope.valueDesc == "" || $scope.valueDesc == undefined
+                || $scope.valueFecha == "" || $scope.valueFecha == undefined) {
+                error = true
+                alert("Faltan datos por rellenar")
 
             } else {
-                $localStorage.listaTareas[i].fecha = $scope.valueFechaGG
+
+                $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
+                !$scope.valueCheck ? $scope.valueCheck = false : $scope.valueCheck = true
+
+                //Primero guardamos los valores en localStorage
+                $localStorage.listaTareas.push({
+                    "autor": $scope.valueAutor,
+                    "desc": $scope.valueDesc,
+                    "fecha": $scope.valueFechaGG,
+                    "check": $scope.valueCheck
+                })
+
+                //Creamos una variable que va a guardar los valores del último registro
+                // insertado del localStorage a la lista
+                //var varUltRegistro = ($localStorage.listaTareas.length - 1)
+
+                /* $scope.listaTareas.push({
+                    "autor": $localStorage.listaTareas[varUltRegistro].autor,
+                    "desc": $localStorage.listaTareas[varUltRegistro].desc,
+                    "fecha": $localStorage.listaTareas[varUltRegistro].fecha,
+                    "check": $localStorage.listaTareas[varUltRegistro].check
+                }) */
+                $("label:eq(2)").text("Fecha de la tarea")
             }
-            $localStorage.listaTareas[i].check = $scope.valueCheck
+        } else {
 
-            $scope.valueFechaGG = undefined
+            if ($scope.valueAutor == "" || $scope.valueAutor == undefined
+                || $scope.valueDesc == "" || $scope.valueDesc == undefined
+                || $scope.valueFecha == "" || $scope.valueFecha == undefined) {
+                error = true
+                alert("Faltan datos por rellenar")
 
-            /* $scope.listaTareas[i].autor = $localStorage.listaTareas[i].autor
-            $scope.listaTareas[i].desc = $localStorage.listaTareas[i].desc
-            $scope.listaTareas[i].fecha = $localStorage.listaTareas[i].fecha
-            $scope.listaTareas[i].check = $localStorage.listaTareas[i].check */
+            } else {
 
-            $("label:eq(2)").text("Fecha de la tarea")
+                var i = $scope.indiceEditar
+                $scope.valueFechaGG = $filter('date')($scope.valueFecha, "dd/MM/yyyy");
+
+                $localStorage.listaTareas[i].autor = $scope.valueAutor
+                $localStorage.listaTareas[i].desc = $scope.valueDesc
+                if ($scope.valueFecha == undefined
+                    || $scope.valueFechaGG == undefined
+                    || $scope.valueFechaGG == ""
+                    || $scope.valueFechaGG == null) {
+
+                } else {
+                    $localStorage.listaTareas[i].fecha = $scope.valueFechaGG
+                }
+                $localStorage.listaTareas[i].check = $scope.valueCheck
+
+                $scope.valueFechaGG = undefined
+
+                /* $scope.listaTareas[i].autor = $localStorage.listaTareas[i].autor
+                $scope.listaTareas[i].desc = $localStorage.listaTareas[i].desc
+                $scope.listaTareas[i].fecha = $localStorage.listaTareas[i].fecha
+                $scope.listaTareas[i].check = $localStorage.listaTareas[i].check */
+
+                $("label:eq(2)").text("Fecha de la tarea")
+            }
         }
-        // Volvemos a deshabilitarlo
-        $scope.noEditable = true
-        $scope.valueAutor = ""
-        $scope.valueDesc = ""
-        $scope.valueFecha = ""
-        $scope.valueCheck = ""
-        $("td a").show()
-        $("label:eq(2)").text("Fecha de la tarea")
-        $scope.botonOff = false
+        if (error == false) {
+
+            // Volvemos a deshabilitarlo
+            $scope.noEditable = true
+            $scope.valueAutor = ""
+            $scope.valueDesc = ""
+            $scope.valueFecha = ""
+            $scope.valueCheck = ""
+            $("td a").show()
+            $("label:eq(2)").text("Fecha de la tarea")
+            $scope.botonOff = false
+        }
 
     }
 });
